@@ -35,7 +35,9 @@ public class ResearchAmazonSteps {
     }
 
     @Quando("clico no produto para visualizar")
-    public void clicoNoProdutoParaVisualizar() { researchAmazonPage.visualizarProduto(); }
+    public void clicoNoProdutoParaVisualizar() {
+        researchAmazonPage.visualizarProduto();
+    }
 
     @Entao("a navegacao foi realizada com sucesso")
     public void a_navegacao_foi_realizada_com_sucesso() {

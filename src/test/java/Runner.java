@@ -1,11 +1,11 @@
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "classpath:features",
-        glue = {"steps"}, monochrome = true, dryRun = false,
-        plugin = {"json:target/cucumber.json"})
+@CucumberOptions(features = "classpath:features", glue = { "" },
+		monochrome = true, dryRun  = false)
 public class Runner {
 
 }
