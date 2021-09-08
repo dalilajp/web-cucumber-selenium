@@ -2,6 +2,7 @@ package util;
 
 import java.util.concurrent.TimeUnit;
 
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,7 +10,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -27,10 +27,13 @@ public class TestRule {
 		Utils.deleteArquivo();
 		if (extentReport == null) {
 			extentReport = new ExtentReports();
-			htmlReporter = new ExtentHtmlReporter("src/test/resources/reports/htmlReporter.html");
+			htmlReporter = new ExtentHtmlReporter("src/test/resources/reports/Reporter.html");
+			htmlReporter.config().setDocumentTitle("Relatório de Testes");
+			htmlReporter.config().setReportName("Automação de Testes da Navegação no site amazon.com");
+			htmlReporter.config().setEncoding("UTF-8");
 			extentReport.attachReporter(htmlReporter);
 		}
-		extentTest = extentReport.createTest(cenario.getId());
+		extentTest = extentReport.createTest(cenario.getName());
 
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/drivers/chromedriver.exe");
 		ChromeOptions options = new ChromeOptions();
@@ -38,7 +41,7 @@ public class TestRule {
 		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		webDriver.manage().window().maximize();
 	}
-	
+
 	@After
 	public void afterCenario(Scenario cenario) {
 		if (cenario.isFailed()) {
@@ -50,16 +53,16 @@ public class TestRule {
 			extentTest.log(Status.PASS, "Cenario " + cenario.getName() + " executado com Sucesso!");
 			extentReport.flush();
 		}
-		
+
 		if (webDriver != null) {
-			webDriver.close();
+			webDriver.quit();
 		}
 	}
 
 	public static WebDriver getDriver() {
 		return webDriver;
 	}
-	
+
 	public static ExtentTest getExtentTest() {
 		return extentTest;
 	}
